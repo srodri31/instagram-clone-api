@@ -4,20 +4,19 @@ const bodyParser = require('body-parser')
 const { connection } = require('./db/db')
 const postsRouter = require('./routes/posts')
 
+const PORT = process.env.PORT || 3000
+
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/posts', postsRouter)
 
-// TODO port should be env
-app.listen(3000, () => {
-  console.log("App listening on port 3000")
+app.listen(PORT, () => {
+  console.log("App listening on port "+PORT)
   connection.authenticate()
     .then(() => {
       console.log("Connection db succeed")
-      // return User.findAll()
     })
-    // .then((users) => console.log("Get all users", users))
     .catch(() => console.log("Connection db failed"))
 })
